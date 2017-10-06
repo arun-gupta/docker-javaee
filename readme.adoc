@@ -1,5 +1,11 @@
 = Java EE application using MySQL with WildFly Swarm
 
+This repo has a simple Java EE application that exposes a REST endpoint at `/resources/employees`. The resource returns a list of employees by querying a database.
+
+The Java EE application is deployed as a JAR using http://wildfly-swarm.io/[WildFly Swarm]. MySQL is used as the backend database.
+
+== Build & Run Application
+
 . Build Docker image
 
   mvn -f employees/pom.xml clean package -Pdocker
@@ -7,6 +13,24 @@
 . Run the application
 
   docker stack deploy --compose-file=docker-compose.yml webapp
+
+. Access the application
+
+  curl http://localhost:8080/resources/employees
++
+The output is shown as:
+
+  <?xml version="1.0" encoding="UTF-8" standalone="yes"?><collection><employee><id>1</id><name>Penny</name></employee><employee><id>2</id><name>Sheldon</name></employee><employee><id>3</id><name>Amy</name></employee><employee><id>4</id><name>Leonard</name></employee><employee><id>5</id><name>Bernadette</name></employee><employee><id>6</id><name>Raj</name></employee><employee><id>7</id><name>Howard</name></employee><employee><id>8</id><name>Priya</name></employee></collection>
+
+. JSON output can be obtained as:
+
+  curl -H"Accept: application/json" http://localhost:8080/resources/employees
++
+The output is shown as:
+
+  [{"id":1,"name":"Penny"},{"id":2,"name":"Sheldon"},{"id":3,"name":"Amy"},{"id":4,"name":"Leonard"},{"id":5,"name":"Bernadette"},{"id":6,"name":"Raj"},{"id":7,"name":"Howard"},{"id":8,"name":"Priya"}]
+
+== Debug
 
 . Check the service logs
 
