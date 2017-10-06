@@ -1,2 +1,17 @@
 = Java EE application using MySQL with WildFly Swarm
 
+. Build Docker image
+
+  mvn -f employees/pom.xml clean package -Pdocker
+
+. Run the application
+
+  docker stack deploy --compose-file=docker-compose.yml webapp
+
+. Check the service logs
+
+  docker service logs webapp_web
+
+. Remove the application
+
+  docker stack rm webapp
