@@ -28,10 +28,6 @@
     </dependencyManagement>
     
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>org.wildfly.swarm</groupId>-->
-            <!--<artifactId>jaxrs-jsonp</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jaxrs-cdi</artifactId>
@@ -50,7 +46,7 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>undertow</artifactId>
+            <artifactId>jaxrs-jaxb</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -75,7 +71,10 @@
                 <artifactId>wildfly-swarm-plugin</artifactId>
                 <version>${version.wildfly.swarm}</version>
                 <configuration>
-                    <mainClass>org.javaee.samples.employees.Main</mainClass>
+                    <!--<mainClass>org.javaee.samples.employees.Main</mainClass>-->
+                    <properties>
+                        <java.net.preferIPv4Stack>true</java.net.preferIPv4Stack>
+                    </properties>
                 </configuration>
                 <executions>
                     <execution>
@@ -96,6 +95,7 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
+                        <version>0.22.1</version>
                         <configuration>
                             <images>
                                 <image>
@@ -106,7 +106,7 @@
                                         </ports>
                                     </run>
                                     <build>
-                                        <from>java:openjdk-8-jdk</from>
+                                        <from>openjdk:8-jre-slim</from>
                                         <ports>
                                             <port>8080</port>
                                         </ports>
