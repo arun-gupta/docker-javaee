@@ -6,11 +6,10 @@ services:
       MYSQL_DATABASE: employees
       MYSQL_USER: mysql
       MYSQL_PASSWORD: mysql
-      MYSQL_ROOT_PASSWORD: supersecret
     ports:
       - 3306:3306
   web:
-    image: arungupta/docker-javaee
+    image: arungupta/docker-javaee:dockerconeu17
     ports:
       - 8080:8080
       - 9990:9990
