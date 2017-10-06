@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Container container = new Container();
 
-        container.fraction(new DatasourcesFraction().jdbcDriver("com.mysql").dataSource("ExampleDS"));
+//        container.fraction(new DatasourcesFraction().jdbcDriver("com.mysql").dataSource("ExampleDS"));
 
         // Start the container and deploy the default war
         container.start().deploy();
