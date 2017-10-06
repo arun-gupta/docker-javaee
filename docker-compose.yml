@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: employees
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+      MYSQL_ROOT_PASSWORD: supersecret
+    ports:
+      - 3306:3306
+  web:
+    image: arungupta/docker-javaee
+    ports:
+      - 8080:8080
+      - 9990:9990
+    depends_on:
+      - db
