@@ -1,3 +1,5 @@
+:toc:
+
 = Java EE application using MySQL with WildFly Swarm
 
 This repo has a simple Java EE application that exposes a REST endpoint at `/resources/employees`. The resource returns a list of employees by querying a database.
@@ -6,7 +8,7 @@ The Java EE application is deployed as a JAR using http://wildfly-swarm.io/[Wild
 
 The application also publishes Prometheus-style metrics at `/metrics`.
 
-== Build & Run Application
+== Build & run application
 
 . Build Docker image
 
@@ -42,7 +44,7 @@ The output is shown as:
 
   docker stack rm webapp
 
-== Metrics
+== Prometheus-style metrics
 
 Get application metrics as:
 
