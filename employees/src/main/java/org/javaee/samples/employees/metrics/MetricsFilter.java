@@ -18,7 +18,7 @@ import static org.javaee.samples.employees.MyApplication.APP_ROOT;
     urlPatterns = APP_ROOT + "/*",
     initParams = {
         @WebInitParam(name = "metric-name", value = "app_metrics"),
-        @WebInitParam(name = "path-components", value = "0")
+        @WebInitParam(name = "path-components", value = "1")
     }
 )
 public class MetricsFilter extends io.prometheus.client.filter.MetricsFilter {
