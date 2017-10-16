@@ -2,39 +2,97 @@
 
 = Java EE application using MySQL with WildFly Swarm
 
-This repo has a simple Java EE application that exposes a REST endpoint at `/resources/employees`. The resource returns a list of employees by querying a database.
+This repo has a simple Java EE application that publishes a REST endpoint at `/resources/employees`. The resource returns a list of employees by querying a database.
 
-The Java EE application is deployed as a JAR using http://wildfly-swarm.io/[WildFly Swarm]. MySQL is used as the backend database.
+The Java EE application is deployed as a JAR built using http://wildfly-swarm.io/[WildFly Swarm]. MySQL is used as the backend database.
 
 The application also publishes Prometheus-style metrics at `/metrics`.
 
-== Build & run application
+== Build application
 
-. Build Docker image
+Build Docker image
 
   mvn -f employees/pom.xml clean package -Pdocker
 
-. Run the application
+Docker image used in this application, `arungupta/docker-javaee:dockerconeu17`, is already published at Docker Hub.
+
+== Run application
+
+=== Using Docker Compose on Swarm mode
 
   docker stack deploy --compose-file=docker-compose.yml webapp
 
-. Access the application
+Verify:
+
+```
+$ docker stack ls
+NAME                SERVICES
+webapp              2
+$ docker stack services webapp
+ID                  NAME                MODE                REPLICAS            IMAGE                                   PORTS
+9tuwp1o2sz4j        webapp_web          replicated          1/1                 arungupta/docker-javaee:dockerconeu17   *:8080->8080/tcp,*:9990->9990/tcp
+jy6qyaxv5e01        webapp_db           replicated          1/1                 mysql:8                                 *:3306->3306/tcp
+$ docker stack ps webapp
+ID                  NAME                IMAGE                                   NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS
+lbnyvncsnfad        webapp_web.1        arungupta/docker-javaee:dockerconeu17   moby                Running             Running 7 seconds ago                       
+r7j0q1nx1y1q        webapp_db.1         mysql:8                                 moby                Running             Running 9 seconds ago            
+```
+
+=== Using Kubernetes 
+
+   kubectl create -f k8s-app.yml
+
+Verify:
+
+```
+$ kubectl get deployments
+NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+mysql-deployment    1         1         1            1           1m
+webapp-deployment   1         1         1            1           1m
+$ kubectl get svc
+NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+db           ClusterIP   10.0.0.93    <none>        3306/TCP   1m
+kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP    11h
+webapp       ClusterIP   10.0.0.63    <none>        8080/TCP   1m
+$ kubectl get pods
+NAME                                READY     STATUS    RESTARTS   AGE
+mysql-deployment-1668503186-xkf2n   1/1       Running   0          1m
+webapp-deployment-372583675-sp7qs   1/1       Running   0          1m
+```
+
+== Access application
+
+=== Using Docker
+
+Access the application:
 
   curl http://localhost:8080/resources/employees
-+
+
 The output is shown as:
 
   <?xml version="1.0" encoding="UTF-8" standalone="yes"?><collection><employee><id>1</id><name>Penny</name></employee><employee><id>2</id><name>Sheldon</name></employee><employee><id>3</id><name>Amy</name></employee><employee><id>4</id><name>Leonard</name></employee><employee><id>5</id><name>Bernadette</name></employee><employee><id>6</id><name>Raj</name></employee><employee><id>7</id><name>Howard</name></employee><employee><id>8</id><name>Priya</name></employee></collection>
 
-. JSON output can be obtained as:
+JSON output can be obtained as:
 
   curl -H"Accept: application/json" http://localhost:8080/resources/employees
-+
+
 The output is shown as:
 
   [{"id":1,"name":"Penny"},{"id":2,"name":"Sheldon"},{"id":3,"name":"Amy"},{"id":4,"name":"Leonard"},{"id":5,"name":"Bernadette"},{"id":6,"name":"Raj"},{"id":7,"name":"Howard"},{"id":8,"name":"Priya"}]
 
+=== Using Kubernetes
+
+Start proxy:
+
+    kubectl proxy
+
+Access the application:
+
+    curl http://localhost:8001/api/v1/proxy/namespaces/default/services/webapp/resources/employees
+
 == Debug
+
+=== Using Docker
 
 . Check the service logs
 
@@ -43,6 +101,16 @@ The output is shown as:
 . Remove the application
 
   docker stack rm webapp
+
+=== Using Kubernetes
+
+. Check the service logs
+
+  kubectl logs <pod-id>
+
+. Remove the application
+
+  kubectl delete -f k8s-app.yml
 
 == Prometheus-style metrics
 
