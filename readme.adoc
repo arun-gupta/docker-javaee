@@ -40,14 +40,14 @@ r7j0q1nx1y1q        webapp_db.1         mysql:8                                 
 
 === Using Kubernetes 
 
-The application is available as Kubernetes Helm chart.
+The application is available as Kubernetes Helm chart in the link:app[app] directory. Install Helm client and server, and then the application.
 
 Install Helm client and server:
 
   brew install kubernetes-helm
   helm init
 
-Install Heml chart:
+Install Helm chart:
 
   helm install --name app app
 
