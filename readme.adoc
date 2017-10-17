@@ -40,7 +40,16 @@ r7j0q1nx1y1q        webapp_db.1         mysql:8                                 
 
 === Using Kubernetes 
 
-   kubectl create -f k8s-app.yml
+The application is available as Kubernetes Helm chart.
+
+Install Helm client and server:
+
+  brew install kubernetes-helm
+  helm init
+
+Install Heml chart:
+
+  helm install --name app app
 
 Verify:
 
@@ -50,14 +59,14 @@ NAME                DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 mysql-deployment    1         1         1            1           1m
 webapp-deployment   1         1         1            1           1m
 $ kubectl get svc
-NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
-db           ClusterIP   10.0.0.93    <none>        3306/TCP   1m
-kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP    11h
-webapp       ClusterIP   10.0.0.63    <none>        8080/TCP   1m
+NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+db           ClusterIP   100.65.195.189   <none>        3306/TCP   1m
+kubernetes   ClusterIP   100.64.0.1       <none>        443/TCP    1h
+webapp       ClusterIP   100.71.21.2      <none>        8080/TCP   1m
 $ kubectl get pods
 NAME                                READY     STATUS    RESTARTS   AGE
-mysql-deployment-1668503186-xkf2n   1/1       Running   0          1m
-webapp-deployment-372583675-sp7qs   1/1       Running   0          1m
+mysql-deployment-1668503186-9h7lz   1/1       Running   0          1m
+webapp-deployment-372583675-hlcbg   1/1       Running   0          1m
 ```
 
 == Access application
@@ -110,7 +119,7 @@ Access the application:
 
 . Remove the application
 
-  kubectl delete -f k8s-app.yml
+  helm delete app
 
 == Prometheus-style metrics
 

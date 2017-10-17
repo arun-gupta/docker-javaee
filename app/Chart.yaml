@@ -1,0 +1,15 @@
+name: app
+version: 1.0.0
+description: WildFly Swarm + MySQL application
+keywords:
+  - java
+  - javaee
+  - mysql
+  - wildfly
+  - wildfly swarm
+home: https://github.com/arun-gupta/docker-javaee/
+sources:
+  - https://github.com/arun-gupta/docker-javaee/
+maintainers:
+  - name: Arun Gupta
+    email: arun.gupta@gmail.com
