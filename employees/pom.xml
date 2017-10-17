@@ -8,10 +8,10 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <version.wildfly.swarm>1.0.0.Final</version.wildfly.swarm>
+        <version.wildfly.swarm>2017.10.0</version.wildfly.swarm>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <version.mysql>5.1.38</version.mysql>
+        <version.mysql>5.1.44</version.mysql>
         <version.prometheus>0.0.26</version.prometheus>
         <docker.repo>arungupta</docker.repo>
     </properties>
@@ -20,7 +20,7 @@
         <dependencies>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>bom</artifactId>
+                <artifactId>bom-all</artifactId>
                 <version>${version.wildfly.swarm}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -31,7 +31,7 @@
     <dependencies>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs-cdi</artifactId>
+            <artifactId>cdi</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
-            <artifactId>jaxrs-jaxb</artifactId>
+            <artifactId>jaeger</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -159,3 +159,4 @@
     </profiles>
 
 </project>
+
