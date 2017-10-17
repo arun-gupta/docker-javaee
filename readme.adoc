@@ -236,4 +236,9 @@ jvm_gc_collection_seconds_sum{gc="PS MarkSweep",} 0.565
 ```
 
 == OpenTracing/Jaeger
-The application traces all requests to Jaeger (https://uber.github.io/jaeger/) and the result can be viewed on http://127.0.0.1:8090
+The application traces all requests to Jaeger (https://uber.github.io/jaeger/) and the result can be viewed on http://127.0.0.1:8090. 
+
+image::docs/jaeger-screenshot.png[Jaeger UI,300,200]
+
+
+

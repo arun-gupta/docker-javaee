@@ -7,7 +7,7 @@ swarm:
         user-name: mysql
         password: mysql
   jaeger:
-    service-name: docker-javaee-service
+    service-name: jaeger
     reporter-log-spans: true
     sampler-type: const
     sampler-parameter: 1
